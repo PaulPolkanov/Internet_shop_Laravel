@@ -7,12 +7,15 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\CharacteristicProduct;
 use App\Models\Page;
+use App\Models\User;
+use Faker\Guesser\Name;
 use Hamcrest\Core\Set;
 use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Redirect;
   //  use App\Providers\SearchServiceProvider;
     use Illuminate\Support\Facades\DB;
-   // use App\Providers\MainmenuServiceProvider;
+use Illuminate\Support\Facades\Hash;
+// use App\Providers\MainmenuServiceProvider;
    use Illuminate\Support\Facades\Mail;
 
     class IndexController extends Controller{
@@ -67,6 +70,15 @@ use Illuminate\Http\Request;
         }
         public function formAction(){
             return view('pages.form');
+        }
+        public function addUserAction(Request $request){
+            $status = User::create(['name' => $request->name, 'email' => $request->email, 'password' => Hash::make('sun'), 'id_role' => 1,]);
+            if ($status) {
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error'];
+            }
+            
         }
 
 
