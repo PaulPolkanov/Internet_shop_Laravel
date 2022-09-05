@@ -1,0 +1,1 @@
+i am page public <?php /**PATH C:\xampp\server\htdocs\example-app\resources\views/welcome.blade.php ENDPATH**/ ?>

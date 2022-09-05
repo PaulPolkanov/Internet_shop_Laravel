@@ -1,0 +1,1 @@
+resalt search <?php /**PATH C:\xampp\server\htdocs\example-app\resources\views/pages/rezsearch.blade.php ENDPATH**/ ?>
