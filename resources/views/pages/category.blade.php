@@ -209,8 +209,8 @@
 								</label>
 							</div>
 							<ul class="store-grid">
-								<li class="active"><i class="fa fa-th"></i></li>
-								<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+								<li><a href=""><i class="fa fa-th"></i></a></li>
+								<li><a href=""><i class="fa fa-th-list"></i></a></li>
 							</ul>
 						</div>
 						<!-- /store top filter -->
@@ -220,17 +220,30 @@
 							
 							<div class="clearfix visible-lg visible-md"></div>
 
-							<!-- product -->
-							@foreach ($category->products as $product)
-								<!-- product -->
-								@if ($product->status == 1)
-									
 
-								<div class="col-md-4 col-xs-6">
-									<div class="product">
-										<div class="product-img">
-											<img src="/storage/img/{{$product->images[0]->name}}" alt="">
-											<div class="product-label">
+
+
+
+
+
+
+
+
+
+							{{-- @if ($list == 1) --}}
+								
+							{{-- @else --}}
+								<!-- product -->
+							@foreach ($category->products as $product)
+							<!-- product -->
+							@if ($product->status == 1)
+							<div class="col-md-4 col-xs-6">
+								<div class="product">
+									<form action="/add-card" method="POST">
+										@csrf
+									<div class="product-img" style="overflow: hidden; height: 250px">
+										<img src="/storage/img/{{$product->images[0]->name}}" alt="">
+										<div class="product-label">
 											@if ($product->old_price != null)
 												<span class="sale">{{round(100*$product->price/$product->old_price-100);}}%</span>
 											@endif
@@ -239,32 +252,43 @@
 											<span class="new">{{$tag->name}}</span>
 											@endforeach
 										</div>
+									</div>
+									<div class="product-body">
+										<p class="product-category">Category</p>
+										<h3 class="product-name"><a href="{{ url('/product', [$product->id])}}">{{$product->name}}</a></h3>
+										<h4 class="product-price">${{$product->price}}
+											@if ($product->old_price != null)
+											<del class="product-old-price">${{$product->old_price}} </del>
+											@endif
+										</h4>
+										<div class="product-rating">
 										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name"><a href="{{ url('/product', [$product->id])}}">{{$product->name}}</a></h3>
-											<h4 class="product-price">${{$product->price}}
-												@if ($product->old_price != null)
-												<del class="product-old-price">${{$product->old_price}} </del>
-												@endif
-											</h4>
-											<div class="product-rating">
-											</div>
-											<div class="product-btns">
-												<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-												<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-											</div>
-										</div>
-										<div class="add-to-cart">
-											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<div class="product-btns">
+											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 										</div>
 									</div>
+									<div class="add-to-cart">
+										<input type="hidden" name="id_product" value="{{$product->id}}">
+										<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+									</div>
+									</form>
 								</div>
-								<!-- /product -->
-								@endif
-							@endforeach
+							</div>
 							<!-- /product -->
+							@endif
+						@endforeach
+						<!-- /product -->
+							{{-- @endif --}}
+
+
+
+
+
+
+
+
 
 							<div class="clearfix visible-sm visible-xs"></div>
 						</div>

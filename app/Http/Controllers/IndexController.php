@@ -1,7 +1,11 @@
 <?php 
     namespace App\Http\Controllers;
 
-    use App\Http\Controllers\Controller;
+use App\Helpers\CheckForExisisting;
+use App\Helpers\SessionCard;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\PageResource;
+use App\Http\Validators\CardValidator;
 use App\Mail\Mailer;
 use App\Models\Category;
 use App\Models\Product;
@@ -17,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 // use App\Providers\MainmenuServiceProvider;
    use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
     class IndexController extends Controller{
         private $template = 'default';
@@ -24,8 +29,12 @@ use Illuminate\Support\Facades\Hash;
             $tamplate = $this->template;
 
 
+
             $category = Category::get();
             $page = Page::where(['aliase' => 'home'])->first();
+            // $data = new PageResource(Page::where(['aliase' => 'home'])->first());
+            // dd($data);
+            
             //$service = new SearchServiceProvider;
             return view('pages.index', compact('tamplate', 'page'));
         }
@@ -80,6 +89,31 @@ use Illuminate\Support\Facades\Hash;
             }
             
         }
+        public function addCardAction(Request $request){
+            $validator = CardValidator::cardAdd($request);
+            if($validator->fails() && CheckForExisisting::product($request->id_product)){
+               // dd('here');
+                return redirect()->back();
+            }
+            //djhfhfjfdj
+            SessionCard::addProduct($request->id_product);
+            return redirect()->route('card');
+        }
+        public function cardAction(){
+            $tamplate = $this->template;
+            Session::get('products');
+            $products = null;
+            if(Session::get('products') != null){
+                $products_id = Session::get('products');
+                $products = Product::whereIn('id', $products_id)->get();
+            }
+            $page = Page::where(['aliase' => 'card'])->first();
+            return view('pages.card', compact('tamplate', 'page', 'products'));
+        }
+        // public function modeShowProductAction($status){
+            
+        //     return redirect()->back();
+        // }
 
 
 

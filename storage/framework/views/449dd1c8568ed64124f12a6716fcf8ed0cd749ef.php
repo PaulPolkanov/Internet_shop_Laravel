@@ -209,8 +209,8 @@
 								</label>
 							</div>
 							<ul class="store-grid">
-								<li class="active"><i class="fa fa-th"></i></li>
-								<li><a href="#"><i class="fa fa-th-list"></i></a></li>
+								<li><a href=""><i class="fa fa-th"></i></a></li>
+								<li><a href=""><i class="fa fa-th-list"></i></a></li>
 							</ul>
 						</div>
 						<!-- /store top filter -->
@@ -220,17 +220,30 @@
 							
 							<div class="clearfix visible-lg visible-md"></div>
 
-							<!-- product -->
-							<?php $__currentLoopData = $category->products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-								<!-- product -->
-								<?php if($product->status == 1): ?>
-									
 
-								<div class="col-md-4 col-xs-6">
-									<div class="product">
-										<div class="product-img">
-											<img src="/storage/img/<?php echo e($product->images[0]->name); ?>" alt="">
-											<div class="product-label">
+
+
+
+
+
+
+
+
+
+							
+								
+							
+								<!-- product -->
+							<?php $__currentLoopData = $category->products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+							<!-- product -->
+							<?php if($product->status == 1): ?>
+							<div class="col-md-4 col-xs-6">
+								<div class="product">
+									<form action="/add-card" method="POST">
+										<?php echo csrf_field(); ?>
+									<div class="product-img" style="overflow: hidden; height: 250px">
+										<img src="/storage/img/<?php echo e($product->images[0]->name); ?>" alt="">
+										<div class="product-label">
 											<?php if($product->old_price != null): ?>
 												<span class="sale"><?php echo e(round(100*$product->price/$product->old_price-100)); ?>%</span>
 											<?php endif; ?>
@@ -239,33 +252,44 @@
 											<span class="new"><?php echo e($tag->name); ?></span>
 											<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 										</div>
-										</div>
-										<div class="product-body">
-											<p class="product-category">Category</p>
-											<h3 class="product-name"><a href="<?php echo e(url('/product', [$product->id])); ?>"><?php echo e($product->name); ?></a></h3>
-											<h4 class="product-price">$<?php echo e($product->price); ?>
+									</div>
+									<div class="product-body">
+										<p class="product-category">Category</p>
+										<h3 class="product-name"><a href="<?php echo e(url('/product', [$product->id])); ?>"><?php echo e($product->name); ?></a></h3>
+										<h4 class="product-price">$<?php echo e($product->price); ?>
 
-												<?php if($product->old_price != null): ?>
-												<del class="product-old-price">$<?php echo e($product->old_price); ?> </del>
-												<?php endif; ?>
-											</h4>
-											<div class="product-rating">
-											</div>
-											<div class="product-btns">
-												<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-												<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-											</div>
+											<?php if($product->old_price != null): ?>
+											<del class="product-old-price">$<?php echo e($product->old_price); ?> </del>
+											<?php endif; ?>
+										</h4>
+										<div class="product-rating">
 										</div>
-										<div class="add-to-cart">
-											<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+										<div class="product-btns">
+											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
 										</div>
 									</div>
+									<div class="add-to-cart">
+										<input type="hidden" name="id_product" value="<?php echo e($product->id); ?>">
+										<button type="submit" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+									</div>
+									</form>
 								</div>
-								<!-- /product -->
-								<?php endif; ?>
-							<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+							</div>
 							<!-- /product -->
+							<?php endif; ?>
+						<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+						<!-- /product -->
+							
+
+
+
+
+
+
+
+
 
 							<div class="clearfix visible-sm visible-xs"></div>
 						</div>

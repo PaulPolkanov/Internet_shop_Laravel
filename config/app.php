@@ -197,7 +197,11 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\SearchServiceProvider::class,
         App\Providers\MainmenuServiceProvider::class,
-
+        App\Providers\SocialNetServiceProvider::class,
+        App\Providers\NewProductShowServiceProvider::class,
+        App\Providers\CartServiceProvider::class,
+        App\Providers\LkServiceProvider::class,
+        
 
     ],
 

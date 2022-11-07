@@ -35,6 +35,10 @@
     31 => 'App\\Providers\\RouteServiceProvider',
     32 => 'App\\Providers\\SearchServiceProvider',
     33 => 'App\\Providers\\MainmenuServiceProvider',
+    34 => 'App\\Providers\\SocialNetServiceProvider',
+    35 => 'App\\Providers\\NewProductShowServiceProvider',
+    36 => 'App\\Providers\\CartServiceProvider',
+    37 => 'App\\Providers\\LkServiceProvider',
   ),
   'eager' => 
   array (
@@ -58,6 +62,10 @@
     17 => 'App\\Providers\\RouteServiceProvider',
     18 => 'App\\Providers\\SearchServiceProvider',
     19 => 'App\\Providers\\MainmenuServiceProvider',
+    20 => 'App\\Providers\\SocialNetServiceProvider',
+    21 => 'App\\Providers\\NewProductShowServiceProvider',
+    22 => 'App\\Providers\\CartServiceProvider',
+    23 => 'App\\Providers\\LkServiceProvider',
   ),
   'deferred' => 
   array (

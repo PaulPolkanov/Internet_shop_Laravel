@@ -4,7 +4,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ClientController;
+use App\Http\Middleware\CheckOrder;
 use App\Http\Middleware\Login;
+use App\Http\Middleware\LoginLk;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,19 +20,35 @@ use App\Http\Middleware\Login;
 |
 */
 
-Route::get('/', [IndexController::class, 'indexAction']);
+Route::get('/', [IndexController::class, 'indexAction'])->name('home');
 Route::get('/product/{id}', [IndexController::class, 'productAction'], function($id){
     return $id;
 });
 Route::get('/category/{id}', [IndexController::class, 'categoryAction'], function($id){
     return $id;
 });
-Route::get('/checkout', [IndexController::class, 'checkoutAction']);
+//Route::get('/checkout', [IndexController::class, 'checkoutAction']);
 Route::get('/resaltserch', [IndexController::class, 'searchAction']);
 Route::get('/form', [IndexController::class, 'formAction']);
 Route::post('/mailer', [IndexController::class, 'mailerAction']);
+Route::post('/add-card', [IndexController::class, 'addCardAction']);
+Route::get('/card', [IndexController::class, 'cardAction'])->name('card');
+// Route::get('/category/{status}', [IndexController::class, 'modeShowProductAction'], function($status){
+//     return $status;
+// });
 
+Route::controller( ClientController::class )->group(function(){
+    Route::middleware([CheckOrder::class])->group(function () {
+        Route::post('/created-order', 'createOrderAction')->name('created-order');
+    });
+    Route::get('/checkout', [ClientController::class, 'checkoutAction'])->name('check');
+    Route::post('/lk-login', 'loginAction')->name('lk-login');
+    Route::middleware([LoginLk::class])->group(function () {
+        Route::get('/lk-logout', 'logoutAction')->name('lk-logout');
 
+        Route::get('/lk', 'IndexAction')->name('lk');
+    });
+});
 
 
 
